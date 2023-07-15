@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./i",
+    "dev": "nodemon ./index.js"
+  },
+  "author": "JKC",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "mongodb": "^5.7.0",
+    "mongoose": "^7.3.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
