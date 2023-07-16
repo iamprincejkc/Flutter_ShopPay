@@ -1,14 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_pay/common/widgets/bottom_bar.dart';
 import 'package:shop_pay/constants/global_variables.dart';
 import 'package:shop_pay/features/auth/screens/auth_screen.dart';
+import 'package:shop_pay/features/services/auth_service.dart';
+import 'package:shop_pay/providers/user_provider.dart';
 import 'package:shop_pay/router.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+    ),
+  ], child: const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final AuthService authService = AuthService();
+  @override
+  void initState() {
+    super.initState();
+    authService.getUserData(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +45,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
       onGenerateRoute: ((settings) => generateRoute(settings)),
-      home: const AuthScreen(),
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+          ? const BottomBar()
+          : const AuthScreen(),
     );
   }
 }

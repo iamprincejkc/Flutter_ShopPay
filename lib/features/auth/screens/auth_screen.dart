@@ -40,6 +40,14 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
+  void signInUser() {
+    authService.signInUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      context: context,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,16 +122,16 @@ class _AuthScreenState extends State<AuthScreen> {
                   value: Auth.signin,
                   groupValue: _auth,
                   activeColor: GlobalVariables.secondaryColor,
-                  onChanged: ((Auth? value) {
+                  onChanged: (Auth? value) {
                     setState(() {
                       _auth = value!;
                     });
-                  }),
+                  },
                 ),
               ),
               if (_auth == Auth.signin)
                 Form(
-                  key: _signUpFormKey,
+                  key: _signInFormKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -133,16 +141,18 @@ class _AuthScreenState extends State<AuthScreen> {
                       ),
                       const SizedBox(height: 10),
                       CustomTextField(
-                        controller: _fullNameController,
-                        hintText: 'Full Name',
-                      ),
-                      const SizedBox(height: 10),
-                      CustomTextField(
                         controller: _passwordController,
                         hintText: 'Password',
                       ),
                       const SizedBox(height: 10),
-                      CustomButton(text: 'Sign In', onTap: (() {}))
+                      CustomButton(
+                        text: 'Sign In',
+                        onTap: () {
+                          if (_signInFormKey.currentState!.validate()) {
+                            signInUser();
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
