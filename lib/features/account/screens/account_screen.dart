@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shop_pay/constants/global_variables.dart';
 import 'package:shop_pay/features/account/widgets/below_app_bar.dart';
+import 'package:shop_pay/features/account/widgets/orders.dart';
+import 'package:shop_pay/features/account/widgets/top_buttons.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
@@ -43,6 +45,9 @@ class AccountScreen extends StatelessWidget {
         children: const [
           BelowAppBar(),
           SizedBox(height: 10),
+          TopButtons(),
+          SizedBox(height: 20),
+          Orders(),
         ],
       ),
     );
