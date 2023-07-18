@@ -20,7 +20,7 @@ class BelowAppBar extends StatelessWidget {
                 style: const TextStyle(fontSize: 22, color: Colors.black),
                 children: [
                   TextSpan(
-                    text: user.name,
+                    text: user.name.toUpperCase(),
                     style: const TextStyle(
                       fontSize: 22,
                       color: Colors.black,
