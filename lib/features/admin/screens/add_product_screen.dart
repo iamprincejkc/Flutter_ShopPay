@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_pay/common/widgets/custom_button.dart';
 import 'package:shop_pay/common/widgets/custom_textfield.dart';
 import 'package:shop_pay/constants/utils.dart';
+import 'package:shop_pay/features/admin/services/admin_services.dart';
 
 import '../../../constants/global_variables.dart';
 
@@ -22,6 +23,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
+
+  final AdminServices adminServices = AdminServices();
+
+  final _addProductFormKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     super.dispose();
@@ -48,6 +54,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
     });
   }
 
+  void sellProduct() {
+    if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
+      adminServices.sellProduct(
+        context: context,
+        name: productNameController.text,
+        description: descriptionController.text,
+        price: double.parse(priceController.text),
+        quantity: double.parse(quantityController.text),
+        category: category,
+        images: images,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,6 +86,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       body: SingleChildScrollView(
         child: Form(
+          key: _addProductFormKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
             child: Column(
@@ -154,7 +175,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                CustomButton(text: 'Sell', onTap: (() {}))
+                CustomButton(text: 'Sell', onTap: sellProduct)
               ],
             ),
           ),
