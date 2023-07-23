@@ -23,9 +23,19 @@ adminRouter.post('/admin/add-product', admin, async (req, res) => {
 adminRouter.get('/admin/get-products', admin, async (req, res) => {
     try {
         let product = await Product.find();
-        if (product.length() == 0) {
+        if (product.length == 0) {
             return res.status(404).json({ msg: 'No Products' });
         }
+        res.json(product);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+adminRouter.post('/admin/delete-product', admin, async (req, res) => {
+    try {
+        const { id } = req.body;
+        let product = await Product.findByIdAndDelete(id);
         res.json(product);
     } catch (error) {
         res.status(500).json({ error: error.message });
