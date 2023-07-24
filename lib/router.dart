@@ -4,7 +4,10 @@ import 'package:shop_pay/features/admin/screens/add_product_screen.dart';
 import 'package:shop_pay/features/auth/screens/auth_screen.dart';
 import 'package:shop_pay/features/home/screens/category_deals_screen.dart';
 import 'package:shop_pay/features/home/screens/home_screen.dart';
+import 'package:shop_pay/features/product_details/screens/product_detail_screen.dart';
 import 'package:shop_pay/features/search/screens/search_screen.dart';
+
+import 'models/product.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -42,6 +45,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => SearchScreen(
           searchQuery: searchQuery,
+        ),
+      );
+    case ProductDetailScreen.routeName:
+      var product = routeSettings.arguments as Product;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => ProductDetailScreen(
+          product: product,
         ),
       );
     default:
