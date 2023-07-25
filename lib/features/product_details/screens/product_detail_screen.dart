@@ -1,10 +1,9 @@
-import 'dart:html';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:shop_pay/common/widgets/custom_button.dart';
 import 'package:shop_pay/common/widgets/stars.dart';
+import 'package:shop_pay/features/product_details/services/product_details_services.dart';
 
 import 'package:shop_pay/models/product.dart';
 
@@ -24,6 +23,9 @@ class ProductDetailScreen extends StatefulWidget {
 }
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final ProductDetailsServices productDetailsServices =
+      ProductDetailsServices();
+
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
@@ -206,19 +208,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             RatingBar.builder(
-                initialRating: 5,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 4),
-                itemBuilder: ((context, _) {
-                  return const Icon(
-                    Icons.star,
-                    color: GlobalVariables.secondaryColor,
-                  );
-                }),
-                onRatingUpdate: ((value) {}))
+              initialRating: 5,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+              itemBuilder: ((context, _) {
+                return const Icon(
+                  Icons.star,
+                  color: GlobalVariables.secondaryColor,
+                );
+              }),
+              onRatingUpdate: ((rating) {
+                productDetailsServices.rateProduct(
+                  context: context,
+                  product: widget.product,
+                  rating: rating,
+                );
+              }),
+            ),
           ],
         ),
       ),
