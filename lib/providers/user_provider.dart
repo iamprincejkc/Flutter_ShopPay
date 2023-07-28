@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/user.dart';
 
 class UserProvider extends ChangeNotifier {
-  User _user = new User(
+  User _user = User(
     id: '',
     email: '',
     name: '',
@@ -10,12 +10,18 @@ class UserProvider extends ChangeNotifier {
     address: '',
     type: '',
     token: '',
+    cart: [],
   );
 
   User get user => _user;
 
   void setUser(String user) {
     _user = User.fromJson(user);
+    notifyListeners();
+  }
+
+  void setUserFromModel(User user) {
+    _user = user;
     notifyListeners();
   }
 }

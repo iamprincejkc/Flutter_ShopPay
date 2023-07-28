@@ -1,8 +1,10 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_pay/constants/global_variables.dart';
 import 'package:shop_pay/features/account/screens/account_screen.dart';
 import 'package:shop_pay/features/home/screens/home_screen.dart';
+import 'package:shop_pay/providers/user_provider.dart';
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
@@ -33,6 +35,7 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    final userCartLength = context.watch<UserProvider>().user.cart.length;
     return Scaffold(
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
@@ -90,22 +93,22 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-              child: const badges.Badge(
+              child: badges.Badge(
                 badgeContent: Text(
-                  '23',
-                  style: TextStyle(color: Colors.white),
+                  userCartLength.toString(),
+                  style: const TextStyle(color: Colors.white),
                 ),
-                badgeAnimation: badges.BadgeAnimation.slide(
+                badgeAnimation: const badges.BadgeAnimation.slide(
                   animationDuration: Duration(seconds: 1),
                   // curve: Curves.fastOutSlowIn,
                   // colorChangeAnimationCurve: Curves.easeInCubic,
                 ),
-                badgeStyle: badges.BadgeStyle(
+                badgeStyle: const badges.BadgeStyle(
                   padding: EdgeInsets.all(5),
                   badgeColor: Colors.red,
                   elevation: 0,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.shopping_cart_outlined,
                 ),
               ),
