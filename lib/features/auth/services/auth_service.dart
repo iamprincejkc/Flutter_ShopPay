@@ -11,7 +11,7 @@ import 'package:shop_pay/features/home/screens/home_screen.dart';
 import 'package:shop_pay/main.dart';
 import 'package:shop_pay/providers/user_provider.dart';
 
-import '../../models/user.dart';
+import '../../../models/user.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
