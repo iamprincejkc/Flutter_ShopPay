@@ -136,7 +136,7 @@ class _AddressScreenState extends State<AddressScreen> {
                           height: 50,
                           paymentConfiguration: snapshot.data!,
                           paymentItems: _paymentItems,
-                          type: GooglePayButtonType.buy,
+                          type: GooglePayButtonType.checkout,
                           margin: const EdgeInsets.only(top: 15.0),
                           onPaymentResult: onGooglePayResult,
                           loadingIndicator: const Center(
@@ -154,7 +154,7 @@ class _AddressScreenState extends State<AddressScreen> {
                           paymentConfiguration: snapshot.data!,
                           paymentItems: _paymentItems,
                           style: ApplePayButtonStyle.whiteOutline,
-                          type: ApplePayButtonType.buy,
+                          type: ApplePayButtonType.checkout,
                           margin: const EdgeInsets.only(top: 15.0),
                           onPaymentResult: onApplePayResult,
                           loadingIndicator: const Center(

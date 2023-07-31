@@ -1,5 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_pay/providers/user_provider.dart';
 
@@ -22,7 +22,8 @@ class CartSubtotal extends StatelessWidget {
             style: TextStyle(fontSize: 20),
           ),
           Text(
-            '₱ ${sum.toStringAsFixed(2)}',
+            NumberFormat.simpleCurrency(name: 'PHP', decimalDigits: 2)
+                .format(sum),
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

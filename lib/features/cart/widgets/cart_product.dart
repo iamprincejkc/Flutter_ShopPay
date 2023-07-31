@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_pay/features/cart/services/cart_services.dart';
 import 'package:shop_pay/features/product_details/services/product_details_services.dart';
@@ -59,7 +60,8 @@ class _CartProductState extends State<CartProduct> {
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
                     child: Text(
-                      '₱${product.price.toStringAsFixed(2)}',
+                      NumberFormat.simpleCurrency(name: 'PHP', decimalDigits: 2)
+                          .format(product.price),
                       style: const TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold),
                       maxLines: 2,
