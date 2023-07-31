@@ -53,25 +53,29 @@ class _DealOfDayState extends State<DealOfDay> {
                         ),
                       ),
                     ),
-                    Image.network(
-                      product!.images[0],
-                      height: 235,
-                      fit: BoxFit.fitHeight,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Image.network(
+                        product!.images[0],
+                        height: 235,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     Container(
                       alignment: Alignment.topLeft,
                       padding: const EdgeInsets.only(left: 15),
-                      child: const Text(
-                        '₱100',
-                        style: TextStyle(fontSize: 18),
+                      child: Text(
+                        '₱ ${product!.price}',
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
                     Container(
                       alignment: Alignment.topLeft,
                       padding:
                           const EdgeInsets.only(left: 15, top: 5, right: 40),
-                      child: const Text(
-                        'JKC',
+                      child: Text(
+                        product!.name,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),

@@ -65,10 +65,10 @@ productRouter.get('/api/deal-of-day', auth, async (req, res) => {
         products.sort((product1, product2) => {
             let product1Sum = 0;
             let product2Sum = 0;
-            for (let i = 0; i < product1.ratings.length; i++) {
+            for (let index = 0; index < product1.ratings.length; index++) {
                 product1Sum += product1.ratings[index].rating;
             }
-            for (let i = 0; i < product2.ratings.length; i++) {
+            for (let index = 0; index < product2.ratings.length; index++) {
                 product2Sum += product2.ratings[index].rating;
             }
             return product1 < product2 ? 1 : -1;
