@@ -1,6 +1,7 @@
 const express = require('express');
 const userRouter = express.Router();
 const auth = require('../middlewares/auth');
+const Order = require('../models/order');
 const { Product } = require('../models/product');
 const User = require('../models/user');
 
@@ -57,6 +58,59 @@ userRouter.delete('/api/remove-from-cart/:id', auth, async (req, res) => {
 
         user = await user.save();
         res.json(user);
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
+userRouter.post('/api/save-user-address', auth, async (req, res) => {
+    try {
+        const { address } = req.body;
+        let user = await User.findById(req.userId);
+        user.address = address;
+        user = await user.save();
+        res.json(user);
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+userRouter.post('/api/order', auth, async (req, res) => {
+    try {
+        const { cart, totalPrice, address } = req.body;
+        let products = [];
+
+        for (let index = 0; index < cart.length; index++) {
+            let product = await Product.findById(cart[index].product._id);
+            if (product.quantity >= cart[index].quantity) {
+                product.quantity -= cart[index].quantity;
+                products.push({ product, quantity: cart[i].quantity });
+                await product.save();
+            } else {
+                return res.status(400).json({ msg: `${product.name} is out of stock` });
+            }
+        }
+
+        let user = await User.findById(req.userId);
+        user.cart = [];
+        user = await user.save();
+
+        let order = new Order({
+            products,
+            totalPrice,
+            address,
+            userId,
+            orderedAt: new Date().getMilliseconds(),
+        });
+
+        order = await order.save();
+
+        res.json(order);
 
     } catch (error) {
         res.status(500).json({ error: error.message });
