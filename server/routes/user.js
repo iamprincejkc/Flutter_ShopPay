@@ -89,14 +89,15 @@ userRouter.post('/api/order', auth, async (req, res) => {
             let product = await Product.findById(cart[index].product._id);
             if (product.quantity >= cart[index].quantity) {
                 product.quantity -= cart[index].quantity;
-                products.push({ product, quantity: cart[i].quantity });
+                products.push({ product, quantity: cart[index].quantity });
                 await product.save();
             } else {
                 return res.status(400).json({ msg: `${product.name} is out of stock` });
             }
         }
-
+        console.log(req);
         let user = await User.findById(req.userId);
+        console.log(user);
         user.cart = [];
         user = await user.save();
 
@@ -104,14 +105,23 @@ userRouter.post('/api/order', auth, async (req, res) => {
             products,
             totalPrice,
             address,
-            userId,
-            orderedAt: new Date().getMilliseconds(),
+            userId: user._id,
+            orderedAt: new Date().getTime(),
         });
 
         order = await order.save();
 
         res.json(order);
 
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+userRouter.get('/api/orders/me', auth, async (req, res) => {
+    try {
+        const orders = await Order.find({ userId: req.userId });
+        res.json(orders);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

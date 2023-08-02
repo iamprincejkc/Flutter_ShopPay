@@ -64,7 +64,7 @@ class _AddressScreenState extends State<AddressScreen> {
     if (Provider.of<UserProvider>(context, listen: false)
         .user
         .address
-        .isEmpty) {
+        .isNotEmpty) {
       addressServices.saveUserAddress(
           context: context, address: addressToBeUsed);
       addressServices.placeOrder(
