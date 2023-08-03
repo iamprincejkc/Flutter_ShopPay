@@ -4,6 +4,7 @@ import 'package:shop_pay/common/widgets/loader.dart';
 import 'package:shop_pay/constants/global_variables.dart';
 import 'package:shop_pay/features/account/services/account_services.dart';
 import 'package:shop_pay/features/account/widgets/single_product.dart';
+import 'package:shop_pay/features/order_details/screens/order_details_screen.dart';
 import 'package:shop_pay/models/order.dart';
 
 class Orders extends StatefulWidget {
@@ -68,8 +69,15 @@ class _OrdersState extends State<Orders> {
                   scrollDirection: Axis.horizontal,
                   itemCount: orders!.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return SingleProduct(
-                      image: orders![index].products[0].images[0],
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, OrderDetailsScreen.routeName,
+                            arguments: orders![index]);
+                      },
+                      child: SingleProduct(
+                        image: orders![index].products[0].images[0],
+                      ),
                     );
                   },
                 ),

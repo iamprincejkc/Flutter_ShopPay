@@ -5,8 +5,10 @@ import 'package:shop_pay/features/admin/screens/add_product_screen.dart';
 import 'package:shop_pay/features/auth/screens/auth_screen.dart';
 import 'package:shop_pay/features/home/screens/category_deals_screen.dart';
 import 'package:shop_pay/features/home/screens/home_screen.dart';
+import 'package:shop_pay/features/order_details/screens/order_details_screen.dart';
 import 'package:shop_pay/features/product_details/screens/product_detail_screen.dart';
 import 'package:shop_pay/features/search/screens/search_screen.dart';
+import 'package:shop_pay/models/order.dart';
 
 import 'models/product.dart';
 
@@ -62,6 +64,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => AddressScreen(
           totalAmount: totalAmount,
+        ),
+      );
+    case OrderDetailsScreen.routeName:
+      var order = routeSettings.arguments as Order;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => OrderDetailsScreen(
+          order: order,
         ),
       );
     default:
