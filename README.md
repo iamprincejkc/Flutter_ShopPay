@@ -34,6 +34,7 @@ Welcome to Flutter_ShopPay, an e-commerce app built using Flutter and MongoDB. T
 - **pay: ^1.1.0**
 - **intl: ^0.17.0**
 - **flutter_lints: ^2.0.0**
+- **fl_chart: ^0.62.0**
 
 ### Backend Dependencies
 - **bcryptjs: ^2.4.3**
