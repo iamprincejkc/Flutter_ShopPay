@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:shop_pay/features/admin/screens/analytics_screen.dart';
+import 'package:shop_pay/features/admin/screens/orders_screen.dart';
 import 'package:shop_pay/features/admin/screens/products_screen.dart';
 import '../../../constants/global_variables.dart';
 import '../../account/screens/account_screen.dart';
@@ -19,12 +21,8 @@ class _AdminScreenState extends State<AdminScreen> {
 
   List<Widget> pages = [
     const ProductsScreen(),
-    const Center(
-      child: Text('Analytics Page'),
-    ),
-    const Center(
-      child: Text('Cart Page'),
-    )
+    const AnalyticsScreen(),
+    const OrdersScreen()
   ];
 
   void updatePage(int page) {

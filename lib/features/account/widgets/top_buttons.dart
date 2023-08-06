@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_pay/features/account/services/account_services.dart';
 import 'package:shop_pay/features/account/widgets/account_button.dart';
 
 class TopButtons extends StatelessWidget {
@@ -6,6 +7,7 @@ class TopButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AccountServices accountServices = AccountServices();
     return Column(
       children: [
         Row(
@@ -17,7 +19,8 @@ class TopButtons extends StatelessWidget {
         const SizedBox(height: 10),
         Row(
           children: [
-            AccountButton(text: 'Logout', onTap: (() {})),
+            AccountButton(
+                text: 'Logout', onTap: (() => accountServices.logOut(context))),
             AccountButton(text: 'Your Wish List', onTap: (() {})),
           ],
         ),

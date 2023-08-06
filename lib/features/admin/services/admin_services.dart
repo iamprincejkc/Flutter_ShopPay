@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:shop_pay/providers/user_provider.dart';
 
 import '../../../constants/global_variables.dart';
+import '../models/sales.dart';
 
 class AdminServices {
   void sellProduct({
@@ -151,6 +152,68 @@ class AdminServices {
     } catch (e) {
       showSnackBar(context, e.toString());
     }
-    return orderList; 
+    return orderList;
+  }
+
+  void changeOrderStatus({
+    required BuildContext context,
+    required int status,
+    required Order order,
+    required VoidCallback onSuccess,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response response = await http.post(
+        Uri.parse('$uri/admin/changer-order-status'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({'id': order.id, 'status': status}),
+      );
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: onSuccess,
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  Future<Map<String, dynamic>> getEarnings(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Sales> sales = [];
+    int totalEarnings = 0;
+    try {
+      http.Response response = await http.get(
+        Uri.parse('$uri/admin/analytics'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {
+          var res = jsonDecode(response.body);
+          totalEarnings = res['totalEarnings'];
+          sales = [
+            Sales('Mobiles', res['mobilesEarnings']),
+            Sales('Essentials', res['essentailsEarnings']),
+            Sales('Appliances', res['appliancesEarnings']),
+            Sales('Books', res['booksEarnings']),
+            Sales('Fashion', res['fashionEarnings']),
+          ];
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return {
+      'sales': sales,
+      'totalEarnings': totalEarnings,
+    };
   }
 }
